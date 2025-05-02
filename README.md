@@ -225,4 +225,49 @@ sudo ufw enable
 
 ---
 
-Let me know if you'd like a `.zip` version of this stack.
+### 🔐 Securing Your Monitoring Stack with HTTPS (Let's Encrypt)
+
+To secure your monitoring interfaces with HTTPS using free SSL certificates from Let's Encrypt, follow these steps:
+
+1. **Install Certbot and the NGINX plugin**:
+
+   ```bash
+   sudo apt update
+   sudo apt install certbot python3-certbot-nginx -y
+   ```
+
+2. **Verify NGINX is running and domains are accessible**:
+
+   Make sure your monitoring domains (e.g., `grafana.yourdomain.com`) are pointing to your server IP and responding over HTTP (port 80):
+
+   ```bash
+   sudo nginx -t && sudo systemctl restart nginx
+   ```
+
+3. **Request SSL certificates using Certbot**:
+
+   Replace `yourdomain.com` with your actual domain:
+
+   ```bash
+   sudo certbot --nginx -d grafana.yourdomain.com -d prometheus.yourdomain.com -d loki.yourdomain.com
+   ```
+
+   Certbot will:
+   - Verify domain ownership
+   - Automatically update NGINX configs to enable SSL
+   - Reload NGINX
+   - Set up automatic certificate renewal
+
+4. **Test automatic renewal**:
+
+   ```bash
+   sudo certbot renew --dry-run
+   ```
+
+Once done, you can access your monitoring stack securely via:
+
+- `https://grafana.yourdomain.com`
+- `https://prometheus.yourdomain.com`
+- `https://loki.yourdomain.com`
+
+---

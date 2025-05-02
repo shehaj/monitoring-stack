@@ -5,6 +5,12 @@ server {
     auth_basic "Restricted Access";
     auth_basic_user_file /etc/nginx/.htpasswd;
 
+    # Allow Let's Encrypt challenge path
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/html;
+        allow all;
+    }
+
     location / {
         proxy_pass http://localhost:3100;
         proxy_set_header Host $host;
