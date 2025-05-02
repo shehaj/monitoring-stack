@@ -172,10 +172,10 @@ server {
 4. Rebuild NGINX config files:
 
    ```bash
-   source .env
-   envsubst < nginx-sites/grafana.conf.template > /etc/nginx/sites-available/grafana.conf
-   envsubst < nginx-sites/prometheus.conf.template > /etc/nginx/sites-available/prometheus.conf
-   envsubst < nginx-sites/loki.conf.template > /etc/nginx/sites-available/loki.conf
+   export $(grep -v '^#' .env | xargs)
+   envsubst < nginx-sites/prometheus.conf.template | sudo tee /etc/nginx/sites-available/prometheus.conf > /dev/null
+   envsubst < nginx-sites/loki.conf.template | sudo tee /etc/nginx/sites-available/loki.conf > /dev/null
+   envsubst < nginx-sites/grafana.conf.template | sudo tee /etc/nginx/sites-available/grafana.conf > /dev/null
    ```
 
 5. Enable sites:
