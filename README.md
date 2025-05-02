@@ -135,15 +135,7 @@ server {
    DOMAIN=your.domain
    ```
 
-3. Generate nginx config files from templates:
-
-   ```bash
-   envsubst < nginx-sites/grafana.conf.template > nginx-sites/grafana.conf
-   envsubst < nginx-sites/prometheus.conf.template > nginx-sites/prometheus.conf
-   envsubst < nginx-sites/loki.conf.template > nginx-sites/loki.conf
-   ```
-
-4. Commit everything **except** `.env` (add to `.gitignore`):
+3. Commit everything **except** `.env` (add to `.gitignore`):
 
    ```bash
    git add .
@@ -173,9 +165,9 @@ server {
 
    ```bash
    export $(grep -v '^#' .env | xargs)
-   envsubst < nginx-sites/prometheus.conf.template | sudo tee /etc/nginx/sites-available/prometheus.conf > /dev/null
-   envsubst < nginx-sites/loki.conf.template | sudo tee /etc/nginx/sites-available/loki.conf > /dev/null
-   envsubst < nginx-sites/grafana.conf.template | sudo tee /etc/nginx/sites-available/grafana.conf > /dev/null
+   envsubst '${DOMAIN}' < nginx-sites/prometheus.conf.template | sudo tee /etc/nginx/sites-available/prometheus.conf > /dev/null
+   envsubst '${DOMAIN}' < nginx-sites/loki.conf.template | sudo tee /etc/nginx/sites-available/loki.conf > /dev/null
+   envsubst '${DOMAIN}' < nginx-sites/grafana.conf.template | sudo tee /etc/nginx/sites-available/grafana.conf > /dev/null
    ```
 
 5. Enable sites:
