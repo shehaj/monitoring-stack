@@ -5,10 +5,10 @@ server {
     auth_basic "Restricted Access";
     auth_basic_user_file /etc/nginx/.htpasswd;
 
-    # Allow Let's Encrypt challenge path
     location ^~ /.well-known/acme-challenge/ {
-        root /var/www/html;
-        allow all;
+        root /var/www/certbot;
+        default_type "text/plain";
+        try_files $uri =404;
     }
 
     location / {
