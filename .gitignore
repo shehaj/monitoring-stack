@@ -1,1 +1,4 @@
 .env
+loki.conf
+grafana.conf
+prometheus.conf
