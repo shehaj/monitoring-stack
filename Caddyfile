@@ -1,14 +1,14 @@
-grafana.technal.io {
+grafana.{$DOMAIN} {
   reverse_proxy localhost:3000
   basicauth admin {$CADDY_AUTH_HASH}
 }
 
-prometheus.technal.io {
+prometheus.{$DOMAIN} {
   reverse_proxy localhost:9090
   basicauth admin {$CADDY_AUTH_HASH}
 }
 
-loki.technal.io {
+loki.{$DOMAIN} {
   reverse_proxy localhost:3100
   basicauth admin {$CADDY_AUTH_HASH}
 }
